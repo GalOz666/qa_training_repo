@@ -2,7 +2,7 @@ import time
 
 import pytest
 from drivers import chrome_driver
-
+from awaits import wait_for_visibility_css
 
 
 class BaseBasics:
@@ -30,14 +30,14 @@ class TestBasics(BaseBasics):
         self.driver.get("https://powtoon-newautotesting:newautotesting$1114@newautotesting.powtoon.com")
         login_button = self.driver.find_element_by_css_selector(to_login_page_btn)
         login_button.click()
-        time.sleep(5)
+        wait_for_visibility_css(self.driver, time_sec=10, css='[id="email_login"]')  # wait for email field to appear
         email_input = self.driver.find_element_by_css_selector('[id="email_login"]')
         password_input = self.driver.find_element_by_css_selector('[id="password_login"]')
         email_input.send_keys('qa.automation+6669@powtoon.com')
         password_input.send_keys('Powt00nP@ssw0rd!')
         login_to_dashsboard_btn = self.driver.find_element_by_css_selector('[id="login_button"]')
         login_to_dashsboard_btn.click()
-        time.sleep(5)
+        time.sleep(5)  # wait 5 seconds!
         yield
         print("yay")
 
