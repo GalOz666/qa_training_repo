@@ -2,19 +2,10 @@ import time
 
 import pytest
 from drivers import chrome_driver
-from awaits import wait_for_visibility_css
+from page_objects.login_stuff import EmailInput, LoginBtn
 
 
-class BaseBasics:
-
-    def add(self, num1: int, num2: int):
-        return num1 + num2
-
-    def subtract(self, num1, num2):
-        return num1 - num2
-
-
-class TestBasics(BaseBasics):
+class BaseTest:
 
     @pytest.fixture()
     def setup_fixture(self):
@@ -26,14 +17,13 @@ class TestBasics(BaseBasics):
 
     @pytest.fixture()
     def login_generic(self, setup_fixture):
-        to_login_page_btn = '[data-label*="login"]'
         self.driver.get("https://powtoon-newautotesting:newautotesting$1114@newautotesting.powtoon.com")
-        login_button = self.driver.find_element_by_css_selector(to_login_page_btn)
-        login_button.click()
-        wait_for_visibility_css(self.driver, time_sec=10, css='[id="email_login"]')  # wait for email field to appear
-        email_input = self.driver.find_element_by_css_selector('[id="email_login"]')
+        login_button = LoginBtn
+        login_button.click(driver=self.driver)
+        email_input = EmailInput()
+        email_input.wait_for_visibility()
         password_input = self.driver.find_element_by_css_selector('[id="password_login"]')
-        email_input.send_keys('qa.automation+6669@powtoon.com')
+        email_input.enter_text(driver=self.driver, text='qa.automation+6669@powtoon.com')
         password_input.send_keys('Powt00nP@ssw0rd!')
         login_to_dashsboard_btn = self.driver.find_element_by_css_selector('[id="login_button"]')
         login_to_dashsboard_btn.click()
@@ -41,8 +31,10 @@ class TestBasics(BaseBasics):
         yield
         print("yay")
 
+
+class TestBasics(BaseTest):
+
     def test_something(self, login_generic):
         home_btn = self.driver.find_element_by_css_selector('div[data-id="nav-bar-home-btn"]')
         assert home_btn.is_displayed(), "home button doesn't appear after login!!!"
         assert "Dashboard".lower() in self.driver.current_url.lower(), "didn't go to proper url!!!!!!!!!"
-
