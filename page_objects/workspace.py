@@ -10,7 +10,7 @@ class ToolBox(BaseElement):
 
 class WorkSpace:
 
-    def __init__(self, driver, validate=True):
+    def __init__(self, driver, validate=False):
         self.capture_button = BaseButtonElement(selector='[data-id="capture-featured-tile"]', driver=driver)
         self.toolbox = ToolBox(driver=driver)
         self.driver = driver
