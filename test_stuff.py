@@ -18,6 +18,8 @@ class TestBasics(BaseBasics):
     def test_login_page(self, setup_fixture):
         self.go_to_login_page()
         assert self.login_button.is_element_visible(timeout=10), "login button not visible!"
+        workspace = self.login_page.click()
+        assert workspace.toolbox.is_element_visible(), "login didn't lead to workspace!"
 
 
 class TestMoreBasics(BaseBasics):

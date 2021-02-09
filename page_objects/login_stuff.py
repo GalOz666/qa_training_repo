@@ -1,11 +1,20 @@
 from .base_object import BaseButtonElement, TextField
+from .workspace import WorkSpace
+
+
+class LoginButton(BaseButtonElement):
+
+    def __init__(self, driver):
+        super().__init__(driver, selector='[data-label*="login"]')
+
+    def go_to(self):
+        return WorkSpace(self.driver)
 
 
 class LoginPage:
 
     def __init__(self, driver, validate=False):
         self.email_input = TextField(selector='[id="email_login"]', driver=driver)
-        self.login_button = BaseButtonElement(selector='[data-label*="login"]', driver=driver)
         self.password_input = TextField(selector='[id="password_login"]', driver=driver)
         self.driver = driver
         if validate:

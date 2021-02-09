@@ -41,6 +41,10 @@ class BaseButtonElement(BaseElement):
         self.wait_for_clickable()
         el = self.get_element()
         el.click()
+        return self.go_to()
+
+    def go_to(self):
+        return self
 
 
 class TextField(BaseButtonElement):
