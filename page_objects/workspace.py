@@ -10,6 +10,10 @@ class ToolBox(BaseElement):
 
 class WorkSpace:
 
-    def __init__(self, driver):
+    def __init__(self, driver, validate=False):
         self.capture_button = BaseButtonElement(selector='[data-id="capture-featured-tile"]', driver=driver)
         self.toolbox = ToolBox(driver=driver)
+        self.driver = driver
+        if validate:
+            assert 'new-dashboard' in driver.current_url
+ad
