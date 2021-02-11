@@ -1,3 +1,5 @@
+import pytest
+
 from test_infra.base_classes import BaseTest
 
 
@@ -23,4 +25,14 @@ class TestBasics(BaseBasics):
 
 
 class TestMoreBasics(BaseBasics):
-    pass
+
+    @pytest.mark.parametrize('user, password', [('qa.automation+6669@powtoon.com', 'Powt00nP@ssw0rd!'),
+                                                ('qa.automation+666@powtoon.com', 'Powt00nP@ssw0rd!')])
+    def test_w_params(self, user, password, login_with_user):
+        if 'qa' in user:
+            print("you are from QA!")
+        else:
+            print("boris say you are opportunist!")
+
+        # D R Y - DON'T REPEAT YOURSELF!
+        #  K I S S - KEEP IT SIMPLE, STUPID!
