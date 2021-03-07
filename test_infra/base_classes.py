@@ -1,9 +1,10 @@
 import time
+from collections import OrderedDict
 
 import pytest
 
 from drivers import chrome_driver
-from page_objects.login_stuff import LoginPage, LandingPage
+from page_objects.login_stuff import LandingPage
 
 
 class BaseTest:
@@ -38,7 +39,6 @@ class BaseTest:
 
     def full_login_process(self, user="qa.automation+6669@powtoon.com", password='Powt00nP@ssw0rd!'):
         self.go_to_login_page()
-        self.login_page.enter_username_password(user, password)
-        login_to_dashsboard_btn = self.driver.find_element_by_css_selector('[id="login_button"]')
-        login_to_dashsboard_btn.click()
-        time.sleep(5)  # wait 5 seconds!
+        self.workspace = self.login_page.enter_username_password(user, password)
+        self.workspace.capture_button.wait_for_visibility()
+

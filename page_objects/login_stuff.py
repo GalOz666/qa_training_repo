@@ -24,6 +24,7 @@ class LoginPage:
     def enter_username_password(self, user, password):
         self.email_input.enter_text(text=user)
         self.password_input.enter_text(text=password)
+        return self.login_to_workspace.click()
 
 
 class LandingPage:
