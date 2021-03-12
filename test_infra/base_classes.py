@@ -1,6 +1,3 @@
-import time
-from collections import OrderedDict
-
 import pytest
 
 from drivers import chrome_driver
@@ -41,4 +38,3 @@ class BaseTest:
         self.go_to_login_page()
         self.workspace = self.login_page.enter_username_password(user, password)
         self.workspace.capture_button.wait_for_visibility()
-

@@ -1,4 +1,5 @@
 import selenium
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -11,6 +12,11 @@ class BaseElement:
         self.selector = selector
         self.by = by
         self.driver = driver
+
+    def drag_and_drop(self, drag_to):
+        to = drag_to.get_element()
+        action = ActionChains(self.driver)
+        action.drag_and_drop_by_offset(self.get_element(), to.location['x'], to.location['y']).perform()
 
     def get_element(self):
         return self.driver.find_element(by=self.by, value=self.selector)
